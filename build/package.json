@@ -1,0 +1,13 @@
+{
+  "name": "@brainpodnl/actions-build",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Build and report images to Brainpod from GitHub Actions",
+  "main": "index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
+}

@@ -1,0 +1,40 @@
+name: Brainpod build
+description: Build images with steiger, push them to the Brainpod registry and report the build to Brainpod.
+author: Brainpod
+branding:
+  icon: package
+  color: purple
+inputs:
+  pod:
+    description: Name of the Brainpod Pod the images belong to.
+    required: true
+  api-url:
+    description: Brainpod API server URL (the control plane that serves /builds and /oidc/github/token).
+    required: true
+  registry:
+    description: Brainpod registry host, for example registry.brainpod.io.
+    required: true
+  config:
+    description: Path of the steiger configuration, relative to the workspace.
+    required: false
+    default: steiger.yml
+  audience:
+    description: Audience of the GitHub OIDC token. Defaults to api-url.
+    required: false
+    default: ""
+  steiger-version:
+    description: steiger release to download from brainhivenl/steiger.
+    required: false
+    default: v0.0.7
+  normalise:
+    description: Rebuild images that run as root so their working directory is owned by uid 1000 and they run as 1000:1000.
+    required: false
+    default: "true"
+outputs:
+  build-id:
+    description: ID of the Brainpod Build.
+  artifacts:
+    description: JSON object mapping each artifact name to its digest-pinned image reference.
+runs:
+  using: node20
+  main: index.js
