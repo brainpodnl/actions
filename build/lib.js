@@ -7,6 +7,9 @@ const path = require('node:path');
 const { StringDecoder } = require('node:string_decoder');
 
 const STEIGER_ASSET = 'steiger-x86_64-unknown-linux-gnu';
+// Brainpod's own installation; another installation sets `api-url` and `registry`.
+const DEFAULT_API_URL = 'https://api.brainpod.io';
+const DEFAULT_REGISTRY = 'registry.brainpod.io';
 const MAX_LOG_EVENT_BYTES = 64 * 1024;
 const LOG_FLUSH_BYTES = 32 * 1024;
 const LOG_FLUSH_INTERVAL_MS = 2000;
@@ -34,11 +37,11 @@ function getInputs(env) {
     if (!value) throw new Error(`Input required and not supplied: ${name}`);
     return value;
   };
-  const apiUrl = required('api-url').replace(/\/+$/, '');
+  const apiUrl = (getInput(env, 'api-url') || DEFAULT_API_URL).replace(/\/+$/, '');
   return {
     pod: required('pod'),
     apiUrl,
-    registry: required('registry').replace(/^[a-z]+:\/\//i, '').replace(/\/+$/, ''),
+    registry: (getInput(env, 'registry') || DEFAULT_REGISTRY).replace(/^[a-z]+:\/\//i, '').replace(/\/+$/, ''),
     config: getInput(env, 'config') || 'steiger.yml',
     audience: getInput(env, 'audience') || apiUrl,
     steigerVersion: getInput(env, 'steiger-version') || 'v0.0.7',

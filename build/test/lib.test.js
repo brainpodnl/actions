@@ -59,6 +59,11 @@ test('getInputs reads action inputs and applies defaults', () => {
   assert.equal(lib.getInputs(githubEnv({ 'INPUT_AUDIENCE': 'custom', 'INPUT_NORMALISE': 'false' })).audience, 'custom');
   assert.equal(lib.getInputs(githubEnv({ 'INPUT_NORMALISE': 'false' })).normalise, false);
   assert.throws(() => lib.getInputs(githubEnv({ 'INPUT_POD': '' })), /pod/);
+  // Without api-url and registry, the build reports to Brainpod's own installation.
+  const brainpod = lib.getInputs(githubEnv({ 'INPUT_API-URL': '', 'INPUT_REGISTRY': '' }));
+  assert.equal(brainpod.apiUrl, 'https://api.brainpod.io');
+  assert.equal(brainpod.registry, 'registry.brainpod.io');
+  assert.equal(brainpod.audience, 'https://api.brainpod.io');
   assert.throws(() => lib.getInputs(githubEnv({ 'INPUT_NORMALISE': 'maybe' })), /normalise/);
 });
 

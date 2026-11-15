@@ -25,19 +25,17 @@ jobs:
       - uses: brainpodnl/actions/build@v1
         with:
           pod: shop
-          api-url: https://api.brainpod.io
-          registry: registry.brainpod.io
 ```
 
-The job needs `permissions: id-token: write`; without it GitHub doesn't issue the OIDC token and the step fails.
+The job needs `permissions: id-token: write`; without it GitHub doesn't issue the OIDC token and the step fails. `api-url` and `registry` default to Brainpod's own installation; set them only for another one.
 
 ## Inputs
 
 | Input | Required | Default | Description |
 | --- | --- | --- | --- |
 | `pod` | yes | | Name of the Pod the images belong to. |
-| `api-url` | yes | | Brainpod API server URL. The action calls `<api-url>/oidc/github/token` and `<api-url>/builds`. |
-| `registry` | yes | | Brainpod registry host. Images are pushed to `<registry>/<pod>/<name>`. |
+| `api-url` | no | `https://api.brainpod.io` | Brainpod API URL. The action calls `<api-url>/oidc/github/token` and `<api-url>/builds`. |
+| `registry` | no | `registry.brainpod.io` | Brainpod registry host. Images are pushed to `<registry>/<pod>/<name>`. |
 | `config` | no | `steiger.yml` | steiger configuration, relative to the workspace. |
 | `audience` | no | `api-url` | Audience of the GitHub OIDC token; must match the audience Brainpod expects. |
 | `steiger-version` | no | `v0.0.7` | steiger release to download. |

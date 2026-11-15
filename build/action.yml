@@ -9,11 +9,13 @@ inputs:
     description: Name of the Brainpod Pod the images belong to.
     required: true
   api-url:
-    description: Brainpod API server URL (the control plane that serves /builds and /oidc/github/token).
-    required: true
+    description: Brainpod API URL, which serves /oidc/github/token and /builds. Set it only for an installation other than Brainpod's own.
+    required: false
+    default: https://api.brainpod.io
   registry:
-    description: Brainpod registry host, for example registry.brainpod.io.
-    required: true
+    description: Brainpod registry host. Set it only for an installation other than Brainpod's own.
+    required: false
+    default: registry.brainpod.io
   config:
     description: Path of the steiger configuration, relative to the workspace.
     required: false
